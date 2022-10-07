@@ -1,89 +1,127 @@
 import React, { Component } from 'react'
 import NewsItem from './NewsItem'
+import Spinner from './Spinner';
+import PropTypes from 'prop-types'
+import jsonData from '../sampleResponse.json';
 
 export class News extends Component {
 
-    constructor() {
-        super();
+    static defaultProps = {
+        pagesize: 12,
+        country: "in",
+        apiKey: "",
+        category: "entertainment"
+    }
+
+    static propTypes = {
+        pagesize: PropTypes.number,
+        country: PropTypes.string,
+        apiKey: PropTypes.string,
+        category: PropTypes.string
+    }
+
+    constructor(props) {
+        super(props);
         this.state = {
             articles: [],
             loading: false,
             page: 1,
-            hasNextPage:true
-        }
+            hasNextPage: true
+        };
+
+        document.title = `News Monkey - ${this.capitalizeFirstLetter(this.props.category)}`;
+    }
+
+    capitalizeFirstLetter  = (str) => {
+        return str.charAt(0).toUpperCase()+str.slice(1);
     }
 
     handlePreviousClick = async () => {
-        console.log("Previous Button clicked");
-        let url = //"https://httpbin.org/json";
-            "https://newsapi.org/v2/top-headlines?country=in&from=2022-09-24&to=2022-09-20&sortBy=popularity&apiKey=26304ff743c34f4f8851b7b81300ed8a&page=".concat(this.state.page - 1).concat("&pageSize=12");
-        const data = await fetch(url)
-        const finalResponse = await data.json()
-        console.log(finalResponse)
-        this.setState({ articles: finalResponse.articles })
-        this.setState({
+        await this.setState({
             page: this.state.page - 1
         })
 
-        let totalItemsFetched  = 12 *(this.state.page+1);
-        if(totalItemsFetched>finalResponse.totalResults){
+        const finalResponse = await this.updateNews(this.state.page);
+
+        let totalItemsFetched = this.props.pagesize * (this.state.page + 1);
+        if (totalItemsFetched > finalResponse.totalResults) {
             this.setState({
                 hasNextPage: false
             })
-        }else{
+        } else {
             this.setState({
                 hasNextPage: true
             })
         }
-        
+
     }
     handleNextClick = async () => {
-        console.log("Next Button clicked");
-        
-        let url = //"https://httpbin.org/json";
-            "https://newsapi.org/v2/top-headlines?country=in&from=2022-09-24&to=2022-09-20&sortBy=popularity&apiKey=26304ff743c34f4f8851b7b81300ed8a&page=".concat(this.state.page + 1).concat("&pageSize=12");;
-        const data = await fetch(url)
-        const finalResponse = await data.json()
-        console.log(finalResponse);
-        
-        this.setState({ articles: finalResponse.articles })
 
-        this.setState({
+        await this.setState({
             page: this.state.page + 1
-        })
-        
-        let totalItemsFetched  = 12 *(this.state.page+1);
-        if(totalItemsFetched>finalResponse.totalResults){
+        });
+
+        const finalResponse = await this.updateNews(this.state.page);
+
+        let totalItemsFetched = this.props.pagesize * (this.state.page + 1);
+        if (totalItemsFetched > finalResponse.totalResults) {
             this.setState({
                 hasNextPage: false
             })
-        }else{
+        } else {
             this.setState({
                 hasNextPage: true
             })
         }
+    }
+
+    updateNews = async (page) => {
+        this.props.setProgress(10);
+        const url = //"https://httpbin.org/json";
+            `https://newsapi.org/v2/top-headlines?country=${this.props.country}&from=2022-09-24&to=2022-09-20&sortBy=popularity&category=${this.props.category}&apiKey=${this.props.apiKey}&page=`
+                .concat(page)
+                .concat(`&pageSize=${this.props.pagesize}`);
+
+        this.setState({
+            loading: true
+        })
+        const data = await fetch(url)
+        
+        const finalResponse = await data.json()
+        if (finalResponse.status !== "error") {
+            this.setState({
+                articles: finalResponse.articles,
+                loading: false
+            })
+            this.props.setProgress(30);
+        }else{
+            this.setState({
+                articles: jsonData.articles,
+                loading: false
+            })
+            this.props.setProgress(30);
+        }
+        this.props.setProgress(100);
+        return finalResponse;
     }
 
 
     async componentDidMount() {
-        // "https://httpbin.org/json"
-        let url = //"https://httpbin.org/json";
-            "https://newsapi.org/v2/top-headlines?country=in&from=2022-09-24&to=2022-09-20&sortBy=popularity&apiKey=26304ff743c34f4f8851b7b81300ed8a&page=".concat(this.state.page).concat("&pageSize=12");;
-        const data = await fetch(url)
-        const finalResponse = await data.json()
-        console.log(finalResponse)
-        this.setState({ articles: finalResponse.articles })
+        await this.updateNews(this.state.page);
     }
+
+    // componentWillUnmount(){
+    //     alert("Hello");
+    // }
     render() {
-        console.log("Inside render")
         return (
             <div className='container my-3'>
-                <h1>NewsMonkey - Top Bites</h1>
-
+                <h1 className="text-center">NewsMonkey - Top Bites{this.props.category?" - "+this.capitalizeFirstLetter(this.props.category):""}</h1>
+                {this.state.loading && <Spinner />}
                 <div className="row">
-                    {this.state.articles.map((element) => {
+                    {!this.state.loading && this.state.articles.map((element) => {
                         return <div key={element.url} className="col-md-4">
-                            <NewsItem newsUrl={element.url} imageUrl={element.urlToImage ? element.urlToImage : "https://content.api.news/v3/images/bin/a85e4068a06acf0bed467669d1063c7e"} title={element.title ? element.title : ""} description={element.description ? element.description : ""} />
+                            <NewsItem source={element.source.name} author={element.author} pubDate={element.publishedAt} newsUrl={element.url} imageUrl={element.urlToImage ? element.urlToImage : `https://content.api.news/v3/images/bin/a85e4068a06acf0bed467669d1063c7e`} title={element.title ? element.title : ""} description={element.description ? element.description : ""} />
                         </div>
                     })}
                 </div>
