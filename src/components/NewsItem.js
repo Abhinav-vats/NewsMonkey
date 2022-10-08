@@ -1,14 +1,17 @@
 // import { getByTitle } from '@testing-library/react'
-import React, { Component } from 'react'
+// import React, { Component } from 'react'
 
-export class NewsItem extends Component {
+import React from "react";
+
+export default function NewsItem(props){
+// export class NewsItem extends Component {
     
-    render() {
-        let {title, description, imageUrl, newsUrl, author, pubDate, source} = this.props;
+    // render() {
+        let {title, description, imageUrl, newsUrl, author, pubDate, source} = props;
         return (
             <div className='my-3'>
                 <div className="card">
-                <span class="position-absolute top-0 translate-middle badge rounded-pill bg-danger" style={{zIndex:"1", left:"90%"}}>{source?source:"Unknown"}</span>
+                <span className="position-absolute top-0 translate-middle badge rounded-pill bg-danger" style={{zIndex:"1", left:"90%"}}>{source?source:"Unknown"}</span>
                     <img src={imageUrl} width={'100px'} height={'150px'} className="card-img-top" alt="..." />
                         <div className="card-body">
                             <h5 className="card-title">{title}...
@@ -22,6 +25,6 @@ export class NewsItem extends Component {
             </div>
         )
     }
-}
+// }
 
-export default NewsItem
+// export default NewsItem

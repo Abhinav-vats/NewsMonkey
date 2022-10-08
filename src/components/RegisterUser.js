@@ -1,7 +1,10 @@
-import React, { Component } from 'react'
+// import React, { Component } from 'react'
+import React from "react";
 
-export default class RegisterUser extends Component {
-    render() {
+export default function RegisterUser(){
+
+// export default class RegisterUser extends Component {
+    // render() {
         return (
             <div>
                 <section className="text-center text-lg-start">
@@ -89,4 +92,4 @@ export default class RegisterUser extends Component {
             </div>
         )
     }
-}
+// }

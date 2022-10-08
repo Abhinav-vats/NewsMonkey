@@ -1,7 +1,10 @@
-import React, { Component } from 'react'
+// import React, { Component } from 'react'
+import React from "react";
 
-export default class Login extends Component {
-  render() {
+
+export default function Login(){
+// export default class Login extends Component {
+//   render() {
     return (
       <div>
         <section className="text-center text-lg-start">
@@ -18,13 +21,11 @@ export default class Login extends Component {
                                                 <label className="form-label" for="form3Example3">Email address</label>
                                             </div>
 
-                                            {/* <!-- Password input --> */}
                                             <div className="form-outline mb-4">
                                                 <input type="password" id="form3Example4" className="form-control" />
                                                 <label className="form-label" for="form3Example4">Password</label>
                                             </div>
 
-                                            {/* <!-- Checkbox --> */}
                                             <div className="form-check d-flex justify-content-center mb-4">
                                                 <input className="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
                                                 <label className="form-check-label" for="form2Example33">
@@ -32,30 +33,11 @@ export default class Login extends Component {
                                                 </label>
                                             </div>
 
-                                            {/* <!-- Submit button --> */}
                                             <button type="submit" className="btn btn-primary btn-block mb-4">
                                                 Sign in
                                             </button>
 
-                                            {/* <!-- Register buttons -->
-                                            <div className="text-center">
-                                                <p>or sign up with:</p>
-                                                <button type="button" className="btn btn-link btn-floating mx-1">
-                                                    <i className="fab fa-facebook-f"></i>
-                                                </button>
-
-                                                <button type="button" className="btn btn-link btn-floating mx-1">
-                                                    <i className="fab fa-google"></i>
-                                                </button>
-
-                                                <button type="button" className="btn btn-link btn-floating mx-1">
-                                                    <i className="fab fa-twitter"></i>
-                                                </button>
-
-                                                <button type="button" className="btn btn-link btn-floating mx-1">
-                                                    <i className="fab fa-github"></i>
-                                                </button>
-                                            </div> */}
+                                            
                                         </form>
                                     </div>
                                 </div>
@@ -67,10 +49,9 @@ export default class Login extends Component {
                             </div>
                         </div>
                     </div>
-                    {/* <!-- Jumbotron --> */}
                 </section>
         
       </div>
     )
   }
-}
+// }

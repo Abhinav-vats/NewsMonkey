@@ -1,17 +1,31 @@
-import React, { Component } from 'react'
+// import React, { Component } from 'react'
+import React from "react";
+
 
 import { Link } from 'react-router-dom';
 
-export class Navbar extends Component {
-    static propTypes = {
 
-    }
+// import React from 'react'
 
-    render() {
+export default function Navbar(props) {
+//   return (
+//     <div>
+      
+//     </div>
+//   )
+// }
+
+
+// export class Navbar extends Component {
+//     static propTypes = {
+
+//     }
+
+//     render() {
         return (
             <div>
-                
-                <nav className="navbar navbar-expand-lg bg-light">
+
+                <nav className="navbar fixed-top navbar-expand-lg bg-light">
                     <div className="container-fluid">
                         <Link className="navbar-brand" to="/">NewsMonkey</Link>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,40 +41,21 @@ export class Navbar extends Component {
                                 <li className="nav-item"><Link className="nav-link" to="/health">Health</Link></li>
                                 <li className="nav-item"><Link className="nav-link" to="/science">Science</Link></li>
                                 <li className="nav-item"><Link className="nav-link" to="/technology">Technology</Link></li>
-                                {/* <li className="nav-item dropdown">
-                                    <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Category
-                                    </Link>
-                                    <ul className="dropdown-menu">
-                                        <li><Link className="dropdown-item" to="/sports">Sports</Link></li>
-                                        <li><Link className="dropdown-item" to="/entertainment">Entertainment</Link></li>
-                                        <li><Link className="dropdown-item" to="/health">Health</Link></li>
-                                        <li><Link className="dropdown-item" to="/science">Science</Link></li>
-                                        <li><Link className="dropdown-item" to="/tech">Technology</Link></li>
-                                        <li><hr className="dropdown-divider" /></li>
-                                        <li><Link className="dropdown-item" to="/general">General</Link></li>
-
-                                    </ul>
-                                </li> */}
-
-                                {/* <li className="nav-item">
-                                    <Link className="nav-link disabled" to="/">Disabled</Link>
-                                </li> */}
                             </ul>
-                            <ul className="navbar-nav me-auto mb-1 mb-lg-2  justify-content-end flex-grow-1">
+                            {/* <ul className="navbar-nav me-auto mb-1 mb-lg-2  justify-content-end flex-grow-1">
                                 <li className="nav-item">
                                     <Link className="nav-link" aria-current="page" to="/register">
                                         <button type="button" className="btn btn-success">Register</button>
                                     </Link>
-                                    
+
                                 </li>
                                 <li className="nav-item">
-                                    
+
                                     <Link className="nav-link" aria-current="page" to="/login">
                                         <button type="button" className="btn btn-outline-primary">Login</button>
                                     </Link>
                                 </li>
-                            </ul>
+                            </ul> */}
 
                         </div>
                     </div>
@@ -69,6 +64,6 @@ export class Navbar extends Component {
             </div>
         )
     }
-}
 
-export default Navbar
+
+// export default Navbar
